@@ -83,6 +83,7 @@ void init(){
  gameEnded = false;
 
  unsigned short x,y;
+ //모든 셀을 빈칸으로 초기화
  for(x=0; x<4; x++){
   for(y=0; y<4; y++){
    strcpy(cell[x][y], emptyCell);
