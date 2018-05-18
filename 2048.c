@@ -299,6 +299,7 @@ unsigned short getAction(){
    anim = !anim;
    display();
   }
+  Sleep(10);	// 키보드입력 대기시간
  } while(1);
 }
 
