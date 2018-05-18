@@ -286,20 +286,24 @@ short merge(char *cell1, char *cell2, bool dontMerge){
 
 unsigned short getAction(){
  unsigned short ch;
+ /* 무한루프로 키보드의 입력을 받는다. */
  do{
-  ch = getch();
+  ch = getch();			// 키보드 입력을 받을 변수
+  /* 방향키를 입력받을때 */
   if (ch == 0xE0){
    switch(getch()){
-    case 72: return 0; break;
-    case 77: return 1; break;
-    case 80: return 2; break;
-    case 75: return 3; break;
+    case 72: return 0; break;	// Up입력
+    case 77: return 1; break;	// Right입력
+    case 80: return 2; break;	// Down 입력
+    case 75: return 3; break;	// Left 입력
    }
-  } else if (ch == 97){
-   anim = !anim;
+  } 
+  /* a키를 입력 받을때 */
+  else if (ch == 97){
+   anim = !anim;	// Animation가능 On/Off
    display();
   }
-  Sleep(10);	// 키보드입력 대기시간
+  Sleep(10);		// 키보드입력 대기시간
  } while(1);
 }
 
