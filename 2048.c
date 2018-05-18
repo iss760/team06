@@ -26,7 +26,7 @@ void display();
 bool isEmpty(char*);
 void addRandomValue(bool);
 short mergeable(short,short);
-short merge(char*,char*,bool);
+short mergeAndMove(char*,char*,bool);
 unsigned short getAction();
 bool doProcess(unsigned short);
 
@@ -205,84 +205,142 @@ void addRandomValue(bool add){
 }
 
 short mergeable(short r, short c){
- unsigned short i=0;
 
- if (c > -1){
-  if (!isEmpty(cell[0][c])){
-   if (!strcmp(cell[0][c],cell[1][c])){
-    i++;
-   } else if (!strcmp(cell[0][c],cell[2][c]) && isEmpty(cell[1][c])){
-    i++;
-   } else if (!strcmp(cell[0][c],cell[3][c]) && isEmpty(cell[1][c]) && isEmpty(cell[2][c])){
-    i++;
-   }
-  }
+	unsigned short i = 0;			// merge가 가능한 경우의 수를 담아 놓는 변수
 
-  if (!isEmpty(cell[1][c]) && i == 0){
-   if (!strcmp(cell[1][c],cell[2][c])){
-    i++;
-   } else if (!strcmp(cell[1][c],cell[3][c]) && isEmpty(cell[2][c])){
-    i++;
-   }
-  }
 
-  if (!strcmp(cell[2][c],cell[3][c]) && !isEmpty(cell[2][c])){
-   i++;
-  }
- }
+	if (c > -1) {
 
- if (r > -1){
-  if (!isEmpty(cell[r][0])){
-   if (!strcmp(cell[r][0],cell[r][1])){
-    i++;
-   } else if (!strcmp(cell[r][0],cell[r][2]) && isEmpty(cell[r][1])){
-    i++;
-   } else if (!strcmp(cell[r][0],cell[r][3]) && isEmpty(cell[r][1]) && isEmpty(cell[r][2])){
-    i++;
-   }
-  }
+		if (!isEmpty(cell[0][c])) {
 
-  if (!isEmpty(cell[r][1]) && i == 0){
-   if (!strcmp(cell[r][1],cell[r][2])){
-    i++;
-   } else if (!strcmp(cell[r][1],cell[r][3]) && isEmpty(cell[r][2])){
-    i++;
-   }
-  }
+			if (!strcmp(cell[0][c], cell[1][c])) {
+				i++;
+			}
 
-  if (!strcmp(cell[r][2],cell[r][3]) && !isEmpty(cell[r][2])){
-   i++;
-  }
- }
+			else if (!strcmp(cell[0][c], cell[2][c]) && isEmpty(cell[1][c])) {
+				i++;
+			}
 
- return i;
+			else if (!strcmp(cell[0][c], cell[3][c]) && isEmpty(cell[1][c]) && isEmpty(cell[2][c])) {
+				i++;
+			}
+
+		}
+		// (0,c)칸의 블록이 존재하는 경우에 1행,2행,3행과 결합이 가능한지를 판단	
+
+		if (!isEmpty(cell[1][c]) && i == 0) {
+
+			if (!strcmp(cell[1][c], cell[2][c])) {
+				i++;
+			}
+
+			else if (!strcmp(cell[1][c], cell[3][c]) && isEmpty(cell[2][c])) {
+				i++;
+			}
+
+		}
+		// (1,c)칸의 블록이 존재하고 위에 조건문에서 결합 가능한 곳을 찾지못한 경우에 (1,c)의 블록이 2행, 3행과 결합이 가능한지를 판단	
+
+		if (!strcmp(cell[2][c], cell[3][c]) && !isEmpty(cell[2][c])) {
+			i++;
+		}
+		// 게임판의 (2,c)위치에 블록이 존재하고 3행과 덧셈이 가능한 경우를 체크
+
+	}
+	// 게임판의 c열에 세로로 같은 값이  있는지 확인한 뒤 결합 가능여부를 판단											
+
+
+
+	if (r > -1) {
+
+		if (!isEmpty(cell[r][0])) {
+
+			if (!strcmp(cell[r][0], cell[r][1])) {
+				i++;
+			}
+
+			else if (!strcmp(cell[r][0], cell[r][2]) && isEmpty(cell[r][1])) {
+				i++;
+			}
+
+			else if (!strcmp(cell[r][0], cell[r][3]) && isEmpty(cell[r][1]) && isEmpty(cell[r][2])) {
+				i++;
+			}
+
+		}
+		// (r,0)칸의 블록이 존재하는 경우에 1열,2열,3열과 결합이 가능한지를 판단
+
+		if (!isEmpty(cell[r][1]) && i == 0) {
+
+			if (!strcmp(cell[r][1], cell[r][2])) {
+				i++;
+			}
+
+			else if (!strcmp(cell[r][1], cell[r][3]) && isEmpty(cell[r][2])) {
+				i++;
+			}
+
+		}
+		// (r,1)칸의 블록이 존재하고 위에 조건문에서 결합 가능한 곳을 찾지못한 경우에 (r,1)의 블록이 2열, 3열과 결합이 가능한지를 판단
+
+		if (!strcmp(cell[r][2], cell[r][3]) && !isEmpty(cell[r][2])) {
+			i++;
+		}
+		// 게임판의 (r,2)위치에 블록이 존재하고 3열과 결합이 가능한 경우를 체크
+
+	}
+	// 게임판의 c열에 세로로 같은 값이  있는지 확인한 뒤 결합 가능여부를 판단		
+
+
+	return i;				// 결합 가능한 경우의 수를 저장한 값을 return해준다.
 }
-short merge(char *cell1, char *cell2, bool dontMerge){
- if (anim){
-  clock_t wait = clock()+0.002*CLOCKS_PER_SEC;
-  while(clock()<wait){}
-  display();
- }
 
- if (isEmpty(cell2)){ //Nothing
-  return -1;
- }
 
- if (isEmpty(cell1)){ //Move
-  strcpy(cell1,cell2);
-  strcpy(cell2,emptyCell);
-  return 0;
- } else if (!strcmp(cell1, cell2) && !dontMerge){ //Merge
-  strcpy(cell2,emptyCell);
 
-  char str[5];
-  sprintf(str,"%4d",atoi(cell1)*2);
-  strcpy(cell1,str);
-  score += atoi(cell1);
-  return 1;
- } else {
-  return -1;
- }
+short mergeAndMove(char *cell1, char *cell2, bool dontMerge) {
+
+	if (anim) {
+		clock_t wait = clock() + 0.002*CLOCKS_PER_SEC;
+		while (clock()<wait) {}
+		display();
+	}
+
+	if (isEmpty(cell2)) {		//Nothing
+
+		return -1;
+
+	}
+	// 함수에서 메인 블록 열할을 하는 cell2의 블록이 비어있어서 움직이지도 못하고 더할 수 도 없는 상황
+
+
+	if (isEmpty(cell1)) {  //Move	
+
+		strcpy(cell1, cell2);
+		strcpy(cell2, emptyCell);
+		return 0;
+
+	}
+	//cell2가 존재하고 cell1이 비어있는 경우 cell의 값을 비어있는 블록 cell1의 위치로 복사하고 기존 cell2위치는 비어있는 블록으로 전환 
+
+	else if (!strcmp(cell1, cell2) && !dontMerge) { //Merge  dontMerge : 이미 merge가 수행됬는지 여부를 확인
+
+		strcpy(cell2, emptyCell);
+		char str[5];
+		sprintf(str, "%4d", atoi(cell1) * 2);				//atoi()는 C형식 문자열을 정수로 변환하여 변환된 값을 return 시켜준다.
+		strcpy(cell1, str);
+		score += atoi(cell1);							//더해서 만들어진 값 만큼 점수를 더해준다.
+		return 1;
+
+	}
+	// cell1, cell2가 모두 존재하고 dontMerge가 true값일 경우 cell2에 값을 빈셀로 바꾸고 cell1의 값을 두 배로 증가시켜 화면에 출력
+
+	else {
+
+		return -1;
+
+	}
+	//위 사항들 외에 경우는 작업을 수행할 수 없다고 판단하여 -1을 return
+
 }
 
 unsigned short getAction(){
@@ -323,7 +381,7 @@ bool doProcess(unsigned short direction){
     nbMerge--;
     redo = false;
     for(x=0; x<3; x++){
-     mergeStatus = merge(cell[x][y],cell[x+1][y], merged);
+     mergeStatus = mergeAndMove(cell[x][y],cell[x+1][y], merged);
      if (mergeStatus > -1){done = true;}
      if (mergeStatus == 0){redo = true;}
      if (mergeStatus == 1){merged = true;}
@@ -345,7 +403,7 @@ bool doProcess(unsigned short direction){
     nbMerge--;
     redo = false;
     for(y=3; y>0; y--){
-     mergeStatus = merge(cell[x][y],cell[x][y-1], merged);
+     mergeStatus = mergeAndMove(cell[x][y],cell[x][y-1], merged);
      if (mergeStatus > -1){done = true;}
      if (mergeStatus == 0){redo = true;}
      if (mergeStatus == 1){merged = true;}
@@ -367,7 +425,7 @@ bool doProcess(unsigned short direction){
     nbMerge--;
     redo = false;
     for(x = 3; x>0; x--){
-     mergeStatus = merge(cell[x][y],cell[x-1][y], merged);
+     mergeStatus = mergeAndMove(cell[x][y],cell[x-1][y], merged);
      if (mergeStatus > -1){done = true;}
      if (mergeStatus == 0){redo = true;}
      if (mergeStatus == 1){merged = true;}
@@ -389,7 +447,7 @@ bool doProcess(unsigned short direction){
     nbMerge--;
     redo = false;
     for(y=0; y < 3; y++){
-     mergeStatus = merge(cell[x][y],cell[x][y+1], merged);
+     mergeStatus = mergeAndMove(cell[x][y],cell[x][y+1], merged);
      if (mergeStatus > -1){done = true;}
      if (mergeStatus == 0){redo = true;}
      if (mergeStatus == 1){merged = true;}
