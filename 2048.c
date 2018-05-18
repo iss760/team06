@@ -67,17 +67,17 @@ void init(){
  SetConsoleTitle("2048 :: YoannBoyer.com");
 
  HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
- SMALL_RECT windowSize = {0,0,WW,WH};
- SetConsoleWindowInfo(handle,1,&windowSize);
+ SMALL_RECT windowSize = {0,0,WW,WH}; //가로는 0 ~ WW(40), 세로는 0 ~ WH(11)으로 윈도우 사이즈 초기화
+ SetConsoleWindowInfo(handle,1,&windowSize); //콘솔화면의 크기와 위치 설정
 
  CONSOLE_SCREEN_BUFFER_INFO info;
- GetConsoleScreenBufferInfo(handle,&info);
- COORD new_size = {info.srWindow.Right-info.srWindow.Left+1,info.srWindow.Bottom-info.srWindow.Top+1};
- SetConsoleScreenBufferSize(handle,new_size);
-
+ GetConsoleScreenBufferInfo(handle,&info); //콘솔 스크린 버퍼 정보 가져오기
+ COORD new_size = {info.srWindow.Right-info.srWindow.Left+1,info.srWindow.Bottom-info.srWindow.Top+1}; //콘솔화면의 좌표계 설정
+ SetConsoleScreenBufferSize(handle,new_size); //콘솔 스크린 버퍼 사이즈를 new_size로 변경
+칸
  srand(time(NULL));
 
- strcpy(emptyCell,"    ");
+ strcpy(emptyCell,"    "); //emptyCell을 빈칸으로지정
 
  anim = false;
  gameEnded = false;
