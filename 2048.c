@@ -8,6 +8,12 @@
 #define WW 40
 #define WH 11
 
+// Keyboard ASCII
+#define Up 72
+#define Right 77
+#define Down 80
+#define Left 75
+
 // Global vals
 bool anim;
 char emptyCell[5];
@@ -351,10 +357,10 @@ unsigned short getAction(){
   /* 방향키를 입력받을때 */
   if (ch == 0xE0){
    switch(getch()){
-    case 72: return 0; break;	// Up입력
-    case 77: return 1; break;	// Right입력
-    case 80: return 2; break;	// Down 입력
-    case 75: return 3; break;	// Left 입력
+    case Up: return 0; break;		// Up입력
+    case Right: return 1; break;	// Right입력
+    case Down: return 2; break;		// Down 입력
+    case Left: return 3; break;		// Left 입력
    }
   } 
   /* a키를 입력 받을때 */
