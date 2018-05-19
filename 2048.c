@@ -367,101 +367,126 @@ unsigned short getAction(){
 }
 
 bool doProcess(unsigned short direction){
- short x,y,mergeStatus,nbMerge;
- bool redo;
- bool done = false, merged = false;
+ short x,y,mergeStatus,nbMerge;		// 좌표, merge상태, merge가능 개수를 확인 하는 변수 선언
+ bool redo;				// 다시 merge할지를 확인하는 변수 선언
+ bool done = false, merged = false;	// 동작했는지, merge되었는지 확인하는 변수 선언
 
+/* direction(방향키)값에 따라 동작을 구현 */
  switch (direction){
+  /* Up방향키 입력시 */
   case 0:
+  /* 가로축 순환 */	  
   for(y=0; y<4; y++){
+   /* 초기 변수 설정 */
    redo = true;
    merged = false;
    nbMerge = mergeable(-1,y);
+   /* merge를 반복 */
    while(redo){
-    nbMerge--;
+    nbMerge--;		// merge 가능 개수 감소
     redo = false;
+    /* 세로축 순환 */
     for(x=0; x<3; x++){
-     mergeStatus = mergeAndMove(cell[x][y],cell[x+1][y], merged);
-     if (mergeStatus > -1){done = true;}
-     if (mergeStatus == 0){redo = true;}
-     if (mergeStatus == 1){merged = true;}
+     mergeStatus = mergeAndMove(cell[x][y],cell[x+1][y], merged);	// merge 실행
+     if (mergeStatus > -1){done = true;}				// 작동확인
+     if (mergeStatus == 0){redo = true;}				// merge 반복을 위한 True
+     if (mergeStatus == 1){merged = true;}				// merge 완료확인
     }
+    /* merge 할게 남았을때 */
     if (nbMerge > 0){
-     redo=true;
-     merged = false;
+     redo=true;		// while문 반복을 위한 True
+     merged = false;	// merge가 끝나지 않았다는 False
     }
    }
   }
   break;
-
+  
+  /* Right방향키 입력시 */
   case 1:
+  /* 세로축 순환 */
   for(x=0; x<4; x++){
+   /* 초기 변수 설정 */
    redo = true;
    merged = false;
    nbMerge = mergeable(x,-1);
+   /* merge를 반복 */
    while(redo){
-    nbMerge--;
+    nbMerge--;		// merge 가능 개수 감소
     redo = false;
+    /* 가로축 순환 */
     for(y=3; y>0; y--){
-     mergeStatus = mergeAndMove(cell[x][y],cell[x][y-1], merged);
-     if (mergeStatus > -1){done = true;}
-     if (mergeStatus == 0){redo = true;}
-     if (mergeStatus == 1){merged = true;}
+     mergeStatus = mergeAndMove(cell[x][y],cell[x][y-1], merged);	// merge 실행
+     if (mergeStatus > -1){done = true;}				// 작동확인
+     if (mergeStatus == 0){redo = true;}				// merge 반복을 위한 True
+     if (mergeStatus == 1){merged = true;}				// merge 완료 확인
     }
+    /* merge할게 남았을 때 */
     if (nbMerge > 0){
-     redo=true;
-     merged = false;
+     redo=true;		// while문 반복을 위한 True
+     merged = false;	// merge가 끝나지 않았다는 False
     }
    }
   }
   break;
 
+  /* Down방향키 입력시 */
   case 2:
+  /* 가로축 순환 */
   for(y=0; y<4; y++){
+   /* 초기 변수 설정 */
    redo = true;
    merged = false;
    nbMerge = mergeable(-1,y);
+   /* merge를 반복 */
    while(redo){
-    nbMerge--;
+    nbMerge--;		// merge가능 개수 감소
     redo = false;
+    /* 세로축 순환 */
     for(x = 3; x>0; x--){
-     mergeStatus = mergeAndMove(cell[x][y],cell[x-1][y], merged);
-     if (mergeStatus > -1){done = true;}
-     if (mergeStatus == 0){redo = true;}
-     if (mergeStatus == 1){merged = true;}
+     mergeStatus = mergeAndMove(cell[x][y],cell[x-1][y], merged);	// merge 실행
+     if (mergeStatus > -1){done = true;}				// 작동확인
+     if (mergeStatus == 0){redo = true;}				// merge 반복을 위한 True
+     if (mergeStatus == 1){merged = true;}				// merge 완료 확인
     }
+    /* merge 할게 남았을때 */
     if (nbMerge > 0){
-     redo=true;
-     merged = false;
+     redo=true;		// while문 반복을 위한 True
+     merged = false;	// merge가 끝나지 않았다는 False
     }
    }
   }
   break;
 
+  /* Left 방향키 입력시*/
   case 3:
+  /* 세로축 순환 */
   for(x=0; x<4; x++){
+   /* 초기 변수 설정 */
    redo = true;
    merged = false;
    nbMerge = mergeable(x,-1);
-   while(redo){
-    nbMerge--;
+   /* merge를 반복 */
+   while(redo){	
+    nbMerge--;		// merge가능 개수 감소
     redo = false;
+    /* 가로축 순환 */
     for(y=0; y < 3; y++){
-     mergeStatus = mergeAndMove(cell[x][y],cell[x][y+1], merged);
-     if (mergeStatus > -1){done = true;}
-     if (mergeStatus == 0){redo = true;}
-     if (mergeStatus == 1){merged = true;}
+     mergeStatus = mergeAndMove(cell[x][y],cell[x][y+1], merged);	// merge 실행
+     if (mergeStatus > -1){done = true;}				// 작동확인
+     if (mergeStatus == 0){redo = true;}				// merge 반복을 위한 True
+     if (mergeStatus == 1){merged = true;}				// merge 완료 확인
     }
+    /* merge 할게 남았을 때 */
     if (nbMerge > 0){
-     redo=true;
-     merged = false;
+     redo=true;		// while문 반복을 위한 True
+     merged = false;	// merge가 끝나지 않았다는 False
     }
    }
   }
   break;
  }
 
- return done;
+ return done;	// 동작여부 반환
 }
 
 
