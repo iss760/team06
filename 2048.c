@@ -45,7 +45,7 @@ void gotoXY(unsigned short x,unsigned short y){
 //setColor함수
 //cell1에 저장된 값에 따른 글자색과 배경색 지정
 void setColor(char *cell1){
- unsigned short cColor; //cColor의 16비트중 뒤의 8비트가 색상지정관련
+ unsigned short cColor; //cColor의 16비트중 뒤의 8비트가 색상지정관련비트
  switch(atoi(cell1)){     //(글자색-앞 4비트,배경색-뒤 4비트)
   case 2: cColor=112; break;  //글자색과 배경색이 합쳐져 복잡하게표현
   case 4: cColor=128; break;  //지정이아닌 랜덤함수를 이용해 수정예정
