@@ -170,6 +170,7 @@ void display(){
 
 
 bool isEmpty(char *cell1){
+	/*셀을 받아 그 셀이 비어있으면 false를 아니면 true를 반환*/
  return strcmp(cell1,emptyCell) ? false : true;
 }
 
