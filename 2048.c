@@ -181,33 +181,31 @@ bool isEmpty(char *cell1){
 }
 
 void addRandomValue(bool add){
-	/*빈 셀의 임의의 위치에 숫자 2, 4중 하나를 랜덤으로 집어넣는 함수*/
  unsigned short x,y;
 
  if (add){
-	 //빈 셀을 찾기 위한 반복문
   do{
    x = rand()%4;
    y = rand()%4;
   } while (!isEmpty(cell[x][y]));
 
   char str[5];
-  sprintf(str,"%4d",(rand()%2+1)*2); //2, 4중 임의의 숫자를 str에 넣음
+  sprintf(str,"%4d",(rand()%2+1)*2);
   strcpy(cell[x][y], str);
 
   bool end = true;
   bool fullBoard = true;
   for(x=0; x<4; x++){
    for(y=0; y<4; y++){
-    if (isEmpty(cell[x][y])){ //셀들 중 비어있는 셀이 있을 경우 fullBoard를 false로 바꿈
+    if (isEmpty(cell[x][y])){
      fullBoard = false;
     }
-    if (mergeable(x,y) > 0){ //블록이 합쳐질 수 있을 경우 end를 false로 바꿈
+    if (mergeable(x,y) > 0){
      end = false;
     }
    }
   }
-  if (end && fullBoard){ //블록이 저 이상 합쳐질 수 없고 모든 셀들이 꽉 찼을 경우 endView() 함수를 호출
+  if (end && fullBoard){
    endView();
   }
  }
