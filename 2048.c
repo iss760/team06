@@ -63,7 +63,9 @@ void setColor(char *cell1){
  }
  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),cColor);
 }
-void center(char *str, unsigned short y){
+//center함수
+//str을 중앙으로 출력
+void center(char *str, unsigned short y){ 
  gotoXY((WW-strlen(str))/2,y);
  printf("%s",str);
 }
