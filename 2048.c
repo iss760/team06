@@ -143,7 +143,9 @@ void endView(){
   }
  }
 }
-
+//display함수
+//칸에따른 경계선과 셀에 할당된 값에 따라 글자, 배경색 정해짐
+//각 셀의 위치와 색이 값에 맞는 출력
 void display(){
  unsigned short x,y;
  if (!gameEnded){
@@ -166,9 +168,9 @@ void display(){
  center(str,2);
 
  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),8);
- gotoXY(WW,0);
+ gotoXY(WW,0);      //오른쪽위로 출력위한 커서이동
  printf(" ");
- gotoXY(WW-9,0);
+ gotoXY(WW-9,0);    
  printf("Anim : ");
  printf(anim == true ? "ON" : "OFF");
  setColor("");
