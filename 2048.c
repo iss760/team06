@@ -105,7 +105,7 @@ void init(){
 }
 
 
-void welcomeView(){//처음시작화면함수
+void welcomeView(){
  center("2048",2);//2048 윗부분에 출력
  center("Press Enter to start",7);//가운데에 출력
  center("",WH);
@@ -115,6 +115,8 @@ void welcomeView(){//처음시작화면함수
 
  system("cls");//화면 지우기
 }
+//welcomview함수
+//게임시작화면
 void endView(){
  system("cls");
  gameEnded = true;
