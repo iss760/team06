@@ -505,13 +505,13 @@ bool doProcess(unsigned short direction){
 
 int main(){
 
- init();
+ init(); //시작 및 초기화 함수 호출
 
- welcomeView();
+ welcomeView(); //시작 화면 호출
 
  while(1){
-  display();
-  addRandomValue(doProcess(getAction()));
+  display(); //화면 출력함수 호출
+  addRandomValue(doProcess(getAction())); //셀에 임의의 숫자 대입
  }
  return 0;
 }
