@@ -38,9 +38,10 @@ bool doProcess(unsigned short);
 
 
 void gotoXY(unsigned short x,unsigned short y){
+	/*x, y값으로 커서의 위치를 설정하는 함수*/
  HANDLE handle=GetStdHandle(STD_OUTPUT_HANDLE);
- COORD position={x,y};
- SetConsoleCursorPosition(handle,position);
+ COORD position={x,y}; //좌표값 저장
+ SetConsoleCursorPosition(handle,position); //콘설 커서를 좌표에 이동시킨다
 }
 void setColor(char *cell1){
  unsigned short cColor; //cColor의 16비트중 뒤의 8비트가 색상지정관련비트
