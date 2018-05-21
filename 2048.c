@@ -13,6 +13,7 @@
 #define Right 77
 #define Down 80
 #define Left 75
+#define Enter 13
 
 // Global vals
 bool anim;
@@ -108,7 +109,7 @@ void welcomeView(){
  center("Press Enter to start",7);
  center("",WH);
 
- while(getch() != 13){
+ while(getch() != Enter){
  }
 
  system("cls");
@@ -132,7 +133,7 @@ void endView(){
  unsigned short ch;
  while(checkAction){
   ch = getch();
-  if (ch == 13){
+  if (ch == Enter){
    checkAction = false;
    system("cls");
    init();
