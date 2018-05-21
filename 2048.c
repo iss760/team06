@@ -43,10 +43,10 @@ void gotoXY(unsigned short x,unsigned short y){
  SetConsoleCursorPosition(handle,position);
 }
 void setColor(char *cell1){
- unsigned short cColor;
- switch(atoi(cell1)){
-  case 2: cColor=112; break;
-  case 4: cColor=128; break;
+ unsigned short cColor; //cColor의 16비트중 뒤의 8비트가 색상지정관련비트
+ switch(atoi(cell1)){     //(글자색-앞 4비트,배경색-뒤 4비트)
+  case 2: cColor=112; break;  //글자색과 배경색이 합쳐져 복잡하게표현
+  case 4: cColor=128; break;  //지정이아닌 랜덤함수를 이용해 수정예정
   case 8: cColor=48; break;
   case 16: cColor=32; break;
   case 32: cColor=72; break;
@@ -61,7 +61,9 @@ void setColor(char *cell1){
  }
  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),cColor);
 }
-void center(char *str, unsigned short y){
+//center함수
+//str을 중앙으로 출력을 위함
+void center(char *str, unsigned short y){ 
  gotoXY((WW-strlen(str))/2,y);
  printf("%s",str);
 }
@@ -103,15 +105,15 @@ void init(){
 }
 
 
-void welcomeView(){
- center("2048",2);
- center("Press Enter to start",7);
+void welcomeView(){//처음시작화면함수
+ center("2048",2);//2048 윗부분에 출력
+ center("Press Enter to start",7);//가운데에 출력
  center("",WH);
 
- while(getch() != 13){
+ while(getch() != 13){//enter키입력받았는지 확인하는 반복문
  }
 
- system("cls");
+ system("cls");//화면 지우기
 }
 void endView(){
  system("cls");
@@ -141,7 +143,9 @@ void endView(){
   }
  }
 }
-
+//display함수
+//칸에따른 경계선과 셀에 할당된 값에 따라 글자, 배경색 정해짐
+//각 셀의 위치와 색이 값에 맞는 출력
 void display(){
  unsigned short x,y;
  if (!gameEnded){
@@ -164,9 +168,9 @@ void display(){
  center(str,2);
 
  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),8);
- gotoXY(WW,0);
+ gotoXY(WW,0);      //오른쪽위로 출력위한 커서이동
  printf(" ");
- gotoXY(WW-9,0);
+ gotoXY(WW-9,0);    
  printf("Anim : ");
  printf(anim == true ? "ON" : "OFF");
  setColor("");
@@ -181,31 +185,33 @@ bool isEmpty(char *cell1){
 }
 
 void addRandomValue(bool add){
+	/*빈 셀의 임의의 위치에 2, 4중 하나의 수를 넣는 함수*/
  unsigned short x,y;
 
  if (add){
+	 //빈 셀을 찾기 위한 반복문
   do{
    x = rand()%4;
    y = rand()%4;
   } while (!isEmpty(cell[x][y]));
 
   char str[5];
-  sprintf(str,"%4d",(rand()%2+1)*2);
+  sprintf(str,"%4d",(rand()%2+1)*2); //2, 4중 임의의 숫자를 str에 넣
   strcpy(cell[x][y], str);
 
   bool end = true;
   bool fullBoard = true;
   for(x=0; x<4; x++){
    for(y=0; y<4; y++){
-    if (isEmpty(cell[x][y])){
+    if (isEmpty(cell[x][y])){ //셀들 중 비어있는 셀이 있을 경우 fullBoard를 false로 바꿈
      fullBoard = false;
     }
-    if (mergeable(x,y) > 0){
+    if (mergeable(x,y) > 0){ //블록이 합쳐질 수 있을 경우 end를 false로 바꿈
      end = false;
     }
    }
   }
-  if (end && fullBoard){
+  if (end && fullBoard){ //블록이 더 이상 합쳐질 수 없고 모든 셀들이 꽉 찼을 경우 endView() 함수 호출
    endView();
   }
  }
