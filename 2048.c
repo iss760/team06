@@ -14,6 +14,7 @@
 #define Down 80
 #define Left 75
 #define Enter 13
+#define ESC 27
 
 // Global vals
 bool anim;
@@ -137,7 +138,7 @@ void endView(){
    checkAction = false;
    system("cls");
    init();
-  } else if (ch == 27){
+  } else if (ch == ESC){
    exit(0);
   }
  }
