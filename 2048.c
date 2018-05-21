@@ -117,31 +117,31 @@ void welcomeView(){
 }
 //welcomview함수
 //게임시작화면
-void endView(){
+void endView(){//게임종료화면	
  system("cls");
  gameEnded = true;
 
  center("Press Enter to restart", 10);
- SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
+ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);//글자색변경
  center("You lost !", 6);
- SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),8);
+ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),8);//글자색변경
  center("Esc to exit", 11);
  setColor("");
 
- display();
+ display();//화면출력
 
  gotoXY(WW,WH);
 
  bool checkAction = true;
  unsigned short ch;
  while(checkAction){
-  ch = getch();
-  if (ch == 13){
+  ch = getch();//키보드입력받기
+  if (ch == 13){//엔터키입력시
    checkAction = false;
-   system("cls");
-   init();
-  } else if (ch == 27){
-   exit(0);
+   system("cls");//화면지우기
+   init();//게임재시작하기
+  } else if (ch == 27){//esc키입력시
+   exit(0);//프로그램종료
   }
  }
 }
