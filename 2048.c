@@ -228,16 +228,16 @@ short mergeable(short r, short c){
 		if (!isEmpty(cell[0][c])) {
 
 			if (!strcmp(cell[0][c], cell[1][c])) {
-				i++;
-			}
+				i++;		
+			}		// 1행과의 결합
 
 			else if (!strcmp(cell[0][c], cell[2][c]) && isEmpty(cell[1][c])) {
 				i++;
-			}
+			}		// 2행과의 결합
 
 			else if (!strcmp(cell[0][c], cell[3][c]) && isEmpty(cell[1][c]) && isEmpty(cell[2][c])) {
 				i++;
-			}
+			}		// 3행과의 결합
 
 		}
 		// (0,c)칸의 블록이 존재하는 경우에 1행,2행,3행과 결합이 가능한지를 판단	
@@ -246,11 +246,11 @@ short mergeable(short r, short c){
 
 			if (!strcmp(cell[1][c], cell[2][c])) {
 				i++;
-			}
+			}		// 2행과의 결합
 
 			else if (!strcmp(cell[1][c], cell[3][c]) && isEmpty(cell[2][c])) {
 				i++;
-			}
+			}		// 3행과의 결합
 
 		}
 		// (1,c)칸의 블록이 존재하고 위에 조건문에서 결합 가능한 곳을 찾지못한 경우에 (1,c)의 블록이 2행, 3행과 결합이 가능한지를 판단	
@@ -271,15 +271,15 @@ short mergeable(short r, short c){
 
 			if (!strcmp(cell[r][0], cell[r][1])) {
 				i++;
-			}
+			}		// 1열과의 결합
 
 			else if (!strcmp(cell[r][0], cell[r][2]) && isEmpty(cell[r][1])) {
 				i++;
-			}
+			}		// 2열과의 결합
 
 			else if (!strcmp(cell[r][0], cell[r][3]) && isEmpty(cell[r][1]) && isEmpty(cell[r][2])) {
 				i++;
-			}
+			}		// 3열과의 결합
 
 		}
 		// (r,0)칸의 블록이 존재하는 경우에 1열,2열,3열과 결합이 가능한지를 판단
@@ -288,11 +288,11 @@ short mergeable(short r, short c){
 
 			if (!strcmp(cell[r][1], cell[r][2])) {
 				i++;
-			}
+			}		// 2열과의 결합
 
 			else if (!strcmp(cell[r][1], cell[r][3]) && isEmpty(cell[r][2])) {
 				i++;
-			}
+			}		// 3열과의 결합
 
 		}
 		// (r,1)칸의 블록이 존재하고 위에 조건문에서 결합 가능한 곳을 찾지못한 경우에 (r,1)의 블록이 2열, 3열과 결합이 가능한지를 판단
@@ -318,6 +318,7 @@ short mergeAndMove(char *cell1, char *cell2, bool dontMerge) {
 		while (clock()<wait) {}
 		display();
 	}
+	// 애니매이션 효과로 변화
 
 	if (isEmpty(cell2)) {		//Nothing
 
