@@ -80,7 +80,6 @@ void init(){
  GetConsoleScreenBufferInfo(handle,&info); //콘솔 스크린 버퍼 정보 가져오기
  COORD new_size = {info.srWindow.Right-info.srWindow.Left+1,info.srWindow.Bottom-info.srWindow.Top+1}; //콘솔화면의 좌표계 설정
  SetConsoleScreenBufferSize(handle,new_size); //콘솔 스크린 버퍼 사이즈를 new_size로 변경
-칸
  srand(time(NULL));
 
  strcpy(emptyCell,"    "); //emptyCell을 빈칸으로지정
