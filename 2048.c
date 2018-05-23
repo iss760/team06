@@ -46,18 +46,18 @@ void gotoXY(unsigned short x,unsigned short y){
 void setColor(char *cell1){
  unsigned short cColor; //cColor의 16비트중 뒤의 8비트가 색상지정관련비트
  switch(atoi(cell1)){     //(글자색-앞 4비트,배경색-뒤 4비트)
-  case 2: cColor=112; break;  //글자색과 배경색이 합쳐져 복잡하게표현
-  case 4: cColor=128; break;  //지정이아닌 랜덤함수를 이용해 수정예정
-  case 8: cColor=48; break;
-  case 16: cColor=32; break;
-  case 32: cColor=72; break;
-  case 64: cColor=71; break;
-  case 128: cColor=96; break;
-  case 256: cColor=103; break;
-  case 512: cColor=103; break;
-  case 1024: cColor=160; break;
-  case 2048: cColor=224; break;
-  case 4096: cColor=224; break;
+  case 2: cColor=207; break;  
+  case 4: cColor=224; break;  //보기쉽도록 색상변경
+  case 8: cColor=160; break;
+  case 16: cColor=179; break;
+  case 32: cColor=159; break;
+  case 64: cColor=223; break;
+  case 128: cColor=143; break;
+  case 256: cColor=15; break;
+  case 512: cColor=207; break;
+  case 1024: cColor=239; break;
+  case 2048: cColor=175; break;
+  case 4096: cColor=191; break;
   default: cColor=7; break;
  }
  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),cColor);
