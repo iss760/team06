@@ -204,7 +204,9 @@ void addRandomValue(bool add){
   } while (!isEmpty(cell[x][y]));
 
   char str[5];
-  sprintf(str,"%4d",(rand()%2+1)*2); //2, 4중 임의의 숫자를 str에 넣
+  int randInRange = (rand()%2+1)*2;
+
+  sprintf(str,"%4d",randInRange); //2, 4중 임의의 숫자를 str에 넣
   strcpy(cell[x][y], str);
 
   bool end = true;
