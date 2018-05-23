@@ -10,9 +10,9 @@
 
 // Keyboard ASCII
 #define Up 72
-#define Right 77
+#define right 77
 #define Down 80
-#define Left 75
+#define left 75
 
 // Global vals
 bool anim;
@@ -366,9 +366,9 @@ unsigned short getAction(){
   if (ch == 0xE0){
    switch(getch()){
     case Up: return 0; break;		// Up입력
-    case Right: return 1; break;	// Right입력
+    case right: return 1; break;	// Right입력
     case Down: return 2; break;		// Down 입력
-    case Left: return 3; break;		// Left 입력
+    case left: return 3; break;		// Left 입력
    }
   } 
   /* a키를 입력 받을때 */
