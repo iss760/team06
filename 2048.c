@@ -35,7 +35,7 @@ short mergeable(short,short);
 short mergeAndMove(char*,char*,bool);
 unsigned short getAction();
 bool doProcess(unsigned short);
-
+void HowtoView();
 
 void gotoXY(unsigned short x,unsigned short y){
  HANDLE handle=GetStdHandle(STD_OUTPUT_HANDLE);
@@ -104,10 +104,21 @@ void init(){
  addRandomValue(true);
 }
 
-
+void HowtoView()//조작법알려주는함수
+{
+	center("※조작법※",2);
+	center("→,←,↑,↓키로 이동",4);
+	center("같은숫자끼리 합치세요.",5);
+	center("칸이 가득차면 Game Over!",6);
+	center("2048을 만들어보세요!",8);
+	center("Press Enter to Start",10);
+	while(getch() !=13){
+	}//엔터키입력받았는지 확인
+	system("cls");//화면지우기
+}
 void welcomeView(){
  center("2048",2);//2048 윗부분에 출력
- center("Press Enter to start",7);//가운데에 출력
+ center("Press Enter to Manual",7);//가운데에 출력
  center("",WH);
 
  while(getch() != 13){//enter키입력받았는지 확인하는 반복문
@@ -510,6 +521,7 @@ int main(){
  init();
 
  welcomeView();
+ HowtoView();
 
  while(1){
   display();
