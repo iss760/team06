@@ -9,10 +9,12 @@
 #define WH 11
 
 // Keyboard ASCII
-#define Up 72
-#define right 77
-#define Down 80
-#define left 75
+#define UP 72
+#define RIGHT 77
+#define DOWN 80
+#define LEFT 75
+#define ENTER 13
+#define ESC 27
 
 // Global vals
 bool anim;
@@ -113,7 +115,7 @@ void welcomeView(){//처음시작화면함수
  center("Press Enter to start",7);//가운데에 출력
  center("",WH);
 
- while(getch() != 13){//enter키입력받았는지 확인하는 반복문
+ while(getch() != ENTER){ //enter키 입력 받았는지 확인하는 반복문
  }
 
  system("cls");//화면 지우기
@@ -137,11 +139,11 @@ void endView(){
  unsigned short ch;
  while(checkAction){
   ch = getch();
-  if (ch == 13){
+  if (ch == ENTER){
    checkAction = false;
    system("cls");
    init();
-  } else if (ch == 27){
+  } else if (ch == ESC){
    exit(0);
   }
  }
@@ -375,10 +377,10 @@ unsigned short getAction(){
   /* 방향키를 입력받을때 */
   if (ch == 0xE0){
    switch(getch()){
-    case Up: return 0; break;		// Up입력
-    case right: return 1; break;	// Right입력
-    case Down: return 2; break;		// Down 입력
-    case left: return 3; break;		// Left 입력
+    case UP: return 0; break;		// Up입력
+    case RIGHT: return 1; break;	// Right입력
+    case DOWN: return 2; break;		// Down 입력
+    case LEFT: return 3; break;		// Left 입력
    }
   } 
   /* a키를 입력 받을때 */
@@ -526,3 +528,4 @@ int main(){
  }
  return 0;
 }
+
