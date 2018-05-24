@@ -172,14 +172,16 @@ void display(){
  strcat(str,sc);
  center(str,2);
 
- SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),8);
  gotoXY(WW,0);      //오른쪽위로 출력위한 커서이동
  printf(" ");
  gotoXY(WW-9,0);    
  printf("Anim : ");
+ setColor("2");
  printf(anim == true ? "ON" : "OFF");
+ gotXY(0,0);
  setColor("");
-
+printf("Press <a> for Anim");
+setColor("");
  center("",WH);
 }
 
