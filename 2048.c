@@ -178,7 +178,7 @@ void display(){
  printf("Anim : ");
  setColor("2");
  printf(anim == true ? "ON" : "OFF");
- gotXY(0,0);
+ gotoXY(0,0);
  setColor("");
 printf("Press <a> for Anim");
 setColor("");
