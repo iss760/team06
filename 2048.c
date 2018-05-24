@@ -9,11 +9,11 @@
 #define WH 11
 
 // Keyboard ASCII
-#define Up 72
-#define Right 77
-#define Down 80
-#define Left 75
-#define Enter 13
+#define UP 72
+#define RIGHT 77
+#define DOWN 80
+#define LEFT 75
+#define ENTER 13
 #define ESC 27
 
 // Global vals
@@ -110,7 +110,7 @@ void welcomeView(){
  center("Press Enter to start",7);
  center("",WH);
 
- while(getch() != Enter){
+ while(getch() != ENTER){
  }
 
  system("cls");
@@ -134,7 +134,7 @@ void endView(){
  unsigned short ch;
  while(checkAction){
   ch = getch();
-  if (ch == Enter){
+  if (ch == ENTER){
    checkAction = false;
    system("cls");
    init();
@@ -359,10 +359,10 @@ unsigned short getAction(){
   /* 방향키를 입력받을때 */
   if (ch == 0xE0){
    switch(getch()){
-    case Up: return 0; break;		// Up입력
-    case Right: return 1; break;	// Right입력
-    case Down: return 2; break;		// Down 입력
-    case Left: return 3; break;		// Left 입력
+    case UP: return 0; break;		// Up입력
+    case RIGHT: return 1; break;	// Right입력
+    case DOWN: return 2; break;		// Down 입력
+    case LEFT: return 3; break;		// Left 입력
    }
   } 
   /* a키를 입력 받을때 */
@@ -510,3 +510,4 @@ int main(){
  }
  return 0;
 }
+
