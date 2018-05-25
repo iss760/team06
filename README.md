@@ -4,6 +4,7 @@
 
 ![](screen.jpg)
 
+
 ## Gameplay
 
 ### 규칙
