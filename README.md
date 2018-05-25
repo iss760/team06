@@ -39,3 +39,5 @@ ex) gcc -o C:\Users\사용자이름\Desktop\test.exe C:\Users\사용자이름\De
 -gcc -c 파일명: 오브젝트파일이 생성된다.
 -gcc -c 오브젝트파일명 -> gcc -o 실행파일명: 실행파일이 생성된다.
     (= gcc -o 실행파일파일명)
+    
+ 다운로드 및 실행 관련 도움 사이트 링크 : http://goproprada.tistory.com/387
