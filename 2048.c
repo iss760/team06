@@ -203,11 +203,13 @@ void addRandomValue(bool add){
  if (add){
 	 //빈 셀을 찾기 위한 반복문
   do{
+	  srand((unsigned)time(NULL));
    x = rand()%4;
    y = rand()%4;
   } while (!isEmpty(cell[x][y]));
 
   char str[5];
+  srand((unsigned)time(NULL));
   int randInRange = (rand()%2+1)*2;
 
   sprintf(str,"%4d",randInRange); //2, 4중 임의의 숫자를 str에 넣
