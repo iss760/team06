@@ -9,10 +9,12 @@
 #define WH 11
 
 // Keyboard ASCII
-#define Up 72
-#define Right 77
-#define Down 80
-#define Left 75
+#define UP 72
+#define RIGHT 77
+#define DOWN 80
+#define LEFT 75
+#define ENTER 13
+#define ESC 27
 
 // Global vals
 bool anim;
@@ -38,25 +40,26 @@ bool doProcess(unsigned short);
 void HowtoView();
 
 void gotoXY(unsigned short x,unsigned short y){
+	/*x, y값으로 커서의 위치를 설정하는 함수*/
  HANDLE handle=GetStdHandle(STD_OUTPUT_HANDLE);
- COORD position={x,y};
- SetConsoleCursorPosition(handle,position);
+ COORD position={x,y}; //좌표값 저장
+ SetConsoleCursorPosition(handle,position); //콘설 커서를 좌표에 이동시킨다
 }
 void setColor(char *cell1){
  unsigned short cColor; //cColor의 16비트중 뒤의 8비트가 색상지정관련비트
  switch(atoi(cell1)){     //(글자색-앞 4비트,배경색-뒤 4비트)
-  case 2: cColor=112; break;  //글자색과 배경색이 합쳐져 복잡하게표현
-  case 4: cColor=128; break;  //지정이아닌 랜덤함수를 이용해 수정예정
-  case 8: cColor=48; break;
-  case 16: cColor=32; break;
-  case 32: cColor=72; break;
-  case 64: cColor=71; break;
-  case 128: cColor=96; break;
-  case 256: cColor=103; break;
-  case 512: cColor=103; break;
-  case 1024: cColor=160; break;
-  case 2048: cColor=224; break;
-  case 4096: cColor=224; break;
+  case 2: cColor=207; break;  
+  case 4: cColor=224; break;  //보기쉽도록 색상변경
+  case 8: cColor=160; break;
+  case 16: cColor=179; break;
+  case 32: cColor=159; break;
+  case 64: cColor=223; break;
+  case 128: cColor=143; break;
+  case 256: cColor=15; break;
+  case 512: cColor=207; break;
+  case 1024: cColor=239; break;
+  case 2048: cColor=175; break;
+  case 4096: cColor=191; break;
   default: cColor=7; break;
  }
  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),cColor);
@@ -80,9 +83,11 @@ void init(){
 
  CONSOLE_SCREEN_BUFFER_INFO info;
  GetConsoleScreenBufferInfo(handle,&info); //콘솔 스크린 버퍼 정보 가져오기
- COORD new_size = {info.srWindow.Right-info.srWindow.Left+1,info.srWindow.Bottom-info.srWindow.Top+1}; //콘솔화면의 좌표계 설정
+ int width_size = info.srWindow.Right - info.srWindow.Left + 1;
+ int height_size = info.srWindow.Bottom - info.srWindow.Top + 1;
+
+ COORD new_size = {width_size, height_size}; //콘솔화면의 좌표계 설정
  SetConsoleScreenBufferSize(handle,new_size); //콘솔 스크린 버퍼 사이즈를 new_size로 변경
-칸
  srand(time(NULL));
 
  strcpy(emptyCell,"    "); //emptyCell을 빈칸으로지정
@@ -121,7 +126,7 @@ void welcomeView(){
  center("Press Enter to Manual",7);//가운데에 출력
  center("",WH);
 
- while(getch() != 13){//enter키입력받았는지 확인하는 반복문
+ while(getch() != ENTER){ //enter키 입력 받았는지 확인하는 반복문
  }
 
  system("cls");//화면 지우기
@@ -180,21 +185,28 @@ void display(){
  strcat(str,sc);
  center(str,2);
 
- SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),8);
  gotoXY(WW,0);      //오른쪽위로 출력위한 커서이동
  printf(" ");
  gotoXY(WW-9,0);    
  printf("Anim : ");
+ setColor("2");
  printf(anim == true ? "ON" : "OFF");
+ gotoXY(0,0);
  setColor("");
-
+printf("Press <a> for Anim");
+setColor("");
  center("",WH);
 }
 
 
 bool isEmpty(char *cell1){
 	/*셀을 받아 그 셀이 비어있으면 false를 아니면 true를 반환*/
- return strcmp(cell1,emptyCell) ? false : true;
+ bool check;
+ check = strcmp(cell1, emptyCell);
+ if(check == true)
+	 return false;
+ else
+	 return true;
 }
 
 void addRandomValue(bool add){
@@ -204,12 +216,16 @@ void addRandomValue(bool add){
  if (add){
 	 //빈 셀을 찾기 위한 반복문
   do{
+	  srand((unsigned)time(NULL));
    x = rand()%4;
    y = rand()%4;
   } while (!isEmpty(cell[x][y]));
 
   char str[5];
-  sprintf(str,"%4d",(rand()%2+1)*2); //2, 4중 임의의 숫자를 str에 넣
+  srand((unsigned)time(NULL));
+  int randInRange = (rand()%2+1)*2;
+
+  sprintf(str,"%4d",randInRange); //2, 4중 임의의 숫자를 str에 넣
   strcpy(cell[x][y], str);
 
   bool end = true;
@@ -240,16 +256,16 @@ short mergeable(short r, short c){
 		if (!isEmpty(cell[0][c])) {
 
 			if (!strcmp(cell[0][c], cell[1][c])) {
-				i++;
-			}
+				i++;		
+			}		// 1행과의 결합
 
 			else if (!strcmp(cell[0][c], cell[2][c]) && isEmpty(cell[1][c])) {
 				i++;
-			}
+			}		// 2행과의 결합
 
 			else if (!strcmp(cell[0][c], cell[3][c]) && isEmpty(cell[1][c]) && isEmpty(cell[2][c])) {
 				i++;
-			}
+			}		// 3행과의 결합
 
 		}
 		// (0,c)칸의 블록이 존재하는 경우에 1행,2행,3행과 결합이 가능한지를 판단	
@@ -258,11 +274,11 @@ short mergeable(short r, short c){
 
 			if (!strcmp(cell[1][c], cell[2][c])) {
 				i++;
-			}
+			}		// 2행과의 결합
 
 			else if (!strcmp(cell[1][c], cell[3][c]) && isEmpty(cell[2][c])) {
 				i++;
-			}
+			}		// 3행과의 결합
 
 		}
 		// (1,c)칸의 블록이 존재하고 위에 조건문에서 결합 가능한 곳을 찾지못한 경우에 (1,c)의 블록이 2행, 3행과 결합이 가능한지를 판단	
@@ -283,15 +299,15 @@ short mergeable(short r, short c){
 
 			if (!strcmp(cell[r][0], cell[r][1])) {
 				i++;
-			}
+			}		// 1열과의 결합
 
 			else if (!strcmp(cell[r][0], cell[r][2]) && isEmpty(cell[r][1])) {
 				i++;
-			}
+			}		// 2열과의 결합
 
 			else if (!strcmp(cell[r][0], cell[r][3]) && isEmpty(cell[r][1]) && isEmpty(cell[r][2])) {
 				i++;
-			}
+			}		// 3열과의 결합
 
 		}
 		// (r,0)칸의 블록이 존재하는 경우에 1열,2열,3열과 결합이 가능한지를 판단
@@ -300,11 +316,11 @@ short mergeable(short r, short c){
 
 			if (!strcmp(cell[r][1], cell[r][2])) {
 				i++;
-			}
+			}		// 2열과의 결합
 
 			else if (!strcmp(cell[r][1], cell[r][3]) && isEmpty(cell[r][2])) {
 				i++;
-			}
+			}		// 3열과의 결합
 
 		}
 		// (r,1)칸의 블록이 존재하고 위에 조건문에서 결합 가능한 곳을 찾지못한 경우에 (r,1)의 블록이 2열, 3열과 결합이 가능한지를 판단
@@ -330,6 +346,7 @@ short mergeAndMove(char *cell1, char *cell2, bool dontMerge) {
 		while (clock()<wait) {}
 		display();
 	}
+	// 애니매이션 효과로 변화
 
 	if (isEmpty(cell2)) {		//Nothing
 
@@ -377,10 +394,10 @@ unsigned short getAction(){
   /* 방향키를 입력받을때 */
   if (ch == 0xE0){
    switch(getch()){
-    case Up: return 0; break;		// Up입력
-    case Right: return 1; break;	// Right입력
-    case Down: return 2; break;		// Down 입력
-    case Left: return 3; break;		// Left 입력
+    case UP: return 0; break;		// Up입력
+    case RIGHT: return 1; break;	// Right입력
+    case DOWN: return 2; break;		// Down 입력
+    case LEFT: return 3; break;		// Left 입력
    }
   } 
   /* a키를 입력 받을때 */
@@ -518,14 +535,17 @@ bool doProcess(unsigned short direction){
 
 int main(){
 
- init();
+ init(); //시작 및 초기화 함수 호출
+
 
  welcomeView();
  HowtoView();
 
+
  while(1){
-  display();
-  addRandomValue(doProcess(getAction()));
+  display(); //화면 출력함수 호출
+  addRandomValue(doProcess(getAction())); //셀에 임의의 숫자 대입
  }
  return 0;
 }
+
