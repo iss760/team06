@@ -37,7 +37,7 @@ short mergeable(short,short);
 short mergeAndMove(char*,char*,bool);
 unsigned short getAction();
 bool doProcess(unsigned short);
-
+void HowtoView();
 
 void gotoXY(unsigned short x,unsigned short y){
 	/*x, y값으로 커서의 위치를 설정하는 함수*/
@@ -109,10 +109,21 @@ void init(){
  addRandomValue(true);
 }
 
-
-void welcomeView(){//처음시작화면함수
+void HowtoView()//조작법알려주는함수
+{
+	center("※조작법※",2);
+	center("→,←,↑,↓키로 이동",4);
+	center("같은숫자끼리 합치세요.",5);
+	center("칸이 가득차면 Game Over!",6);
+	center("2048을 만들어보세요!",8);
+	center("Press Enter to Start",10);
+	while(getch() !=13){
+	}//엔터키입력받았는지 확인
+	system("cls");//화면지우기
+}
+void welcomeView(){
  center("2048",2);//2048 윗부분에 출력
- center("Press Enter to start",7);//가운데에 출력
+ center("Press Enter to Manual",7);//가운데에 출력
  center("",WH);
 
  while(getch() != ENTER){ //enter키 입력 받았는지 확인하는 반복문
@@ -120,31 +131,33 @@ void welcomeView(){//처음시작화면함수
 
  system("cls");//화면 지우기
 }
-void endView(){
+//welcomview함수
+//게임시작화면
+void endView(){//게임종료화면	
  system("cls");
  gameEnded = true;
 
  center("Press Enter to restart", 10);
- SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
+ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);//글자색변경
  center("You lost !", 6);
- SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),8);
+ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),8);//글자색변경
  center("Esc to exit", 11);
  setColor("");
 
- display();
+ display();//화면출력
 
  gotoXY(WW,WH);
 
  bool checkAction = true;
  unsigned short ch;
  while(checkAction){
-  ch = getch();
-  if (ch == ENTER){
+  ch = getch();//키보드입력받기
+  if (ch == 13){//엔터키입력시
    checkAction = false;
-   system("cls");
-   init();
-  } else if (ch == ESC){
-   exit(0);
+   system("cls");//화면지우기
+   init();//게임재시작하기
+  } else if (ch == 27){//esc키입력시
+   exit(0);//프로그램종료
   }
  }
 }
@@ -524,7 +537,10 @@ int main(){
 
  init(); //시작 및 초기화 함수 호출
 
- welcomeView(); //시작 화면 호출
+
+ welcomeView();
+ HowtoView();
+
 
  while(1){
   display(); //화면 출력함수 호출
