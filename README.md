@@ -2,7 +2,7 @@
 
 > Console version of the 2048 game in C language
 
-![](screen.jpg)
+![](screen1.jpg)
 
 
 ## Gameplay
